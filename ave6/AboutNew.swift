@@ -14,7 +14,7 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     
     @IBOutlet weak var tableView:UITableView!
-    private let kTableHeaderHeight: CGFloat = 300.0
+    private let kTableHeaderHeight: CGFloat = 600.0
     var headerView: UIView!
     
     var propObj = PFObject(className: "Bio")

@@ -8,12 +8,14 @@
 
 import UIKit
 import Parse
-
+import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var locationManager: CLLocationManager?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -25,21 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         Parse.initialize(with: parseConfiguration)
-//        let player = PFObject(className: "Bio")
-//        player.setObject("John", forKey: "name")
-//        player.setObject("now way", forKey: "bio")
-//        player.saveInBackground { (succeeded, error) -> Void in
-//            if succeeded {
-//                print("Object Uploaded")
-//            } else {
-//                print("Error: \(String(describing: error)) \(error!)")
-//            }
-//        }
-//
-//        UINavigationBar.appearance().titleTextAttributes = [
-//            NSFontAttributeName: UIFont(name: "Bodoni MT", size: 22)!,
-//            NSForegroundColorAttributeName: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//        ]
+
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
+
         
         UINavigationBar.appearance().titleTextAttributes = [
             NSFontAttributeName: UIFont(name: "Bodoni MT", size: 18)!
@@ -54,11 +45,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
+        registerForPushNotifications()
         
         return true
         
     }
 
+    
+        
+    func registerForPushNotifications()  {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+//            print("Permission Granted: \(granted)")
+            guard granted else { return }
+            self.getNotificationSettings()
+        }
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            UIApplication.shared.registerForRemoteNotifications()
+        }
+    }
+    
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+    }
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register \(error)")
+    }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

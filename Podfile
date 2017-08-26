@@ -7,8 +7,7 @@ target 'ave6' do
 
   pod 'Parse', '~> 1.15'
   pod 'Alamofire', '~> 4.5'
-  pod 'GSKStretchyHeaderView'
-
+  pod 'NWPusher', '~> 0.7'
   # Pods for ave6
 
 end

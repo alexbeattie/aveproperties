@@ -27,6 +27,9 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     var mapItems = NSMutableArray()
     var recentListings = NSMutableArray()
     var locationManager:CLLocationManager!
+    let authorizationStatus = CLLocationManager.authorizationStatus()
+    let regionRadius: Double = 1000
+    
     @IBOutlet var propImage: UIImageView!
 
     override func awakeFromNib() {
@@ -46,27 +49,27 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        
+
+
+        mapView.showsUserLocation = true
+        let initialLocation = CLLocationCoordinate2D(latitude: 48.331965, longitude: -122.323164)
+        let span = MKCoordinateSpan(latitudeDelta: 1.75, longitudeDelta: 1.75)
+        let region = MKCoordinateRegion(center: initialLocation, span: span)
+        mapView.setRegion(region, animated: true)
+        
         if mapView.annotations.count != 0 {
             annotation = mapView.annotations[0]
             mapView.removeAnnotation(annotation)
-
+            
         }
-        
-
-     
-        
     
-//        self.title = "All Listings Map"
+
         addAnnotations()
         
+
+
         
-        let initialLocation = CLLocation(latitude: 47.604147, longitude: -122.334518)
-        let regionRadius: CLLocationDistance = 50000
-        func centerMapOnLocation(location:CLLocation) {
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 5.0, regionRadius * 5.0)
-            mapView.setRegion(coordinateRegion, animated: true)
-        }
-        centerMapOnLocation(location: initialLocation)
 
     }
     func addAnnotations() {
@@ -170,3 +173,4 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     }
   
 }
+
