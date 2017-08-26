@@ -13,15 +13,18 @@ class ListingsCell: UITableViewCell {
 
     @IBOutlet var nameLbl:UILabel!
     @IBOutlet var priceLbl:UILabel!
-    
 
-    
+
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+
     @IBOutlet weak var listingImage: UIImageView!
-    
-    
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+//        Utility.sharedInstance.startActivityIndicator()
+        startActivityIndicator()
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -29,5 +32,14 @@ class ListingsCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func startActivityIndicator() {
+
+        activityIndicator.center = self.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+
 
 }
