@@ -49,18 +49,27 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
     
     
     @IBAction func expandMap(_ sender: Any) {
+        
+//        let expandCollapse = UIButton(type: .custom)
+//        expandCollapse.setImage(UIImage(named:"icons8-expand"), for: .normal)
+        
+        
         if (mapHeightConstraint.constant == 210) {
         mapHeightConstraint.constant = 600
         tableViewHeighConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
+//            self.expandCollapse.setImage(UIImage(named:"collapse"), for: .selected)
+
         }
         } else {
             mapHeightConstraint.constant = 210
             tableViewHeighConstraint.constant = 300
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
+
             }
+          
         
         }
         
@@ -135,7 +144,13 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
+        let origImage = UIImage(named: "icons8-expand")
+        let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
+        expandCollapse.setImage(tintedImage, for: .normal)
+        expandCollapse.tintColor = #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1)
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         
