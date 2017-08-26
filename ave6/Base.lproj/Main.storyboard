@@ -610,10 +610,9 @@
         <!--Navigation Controller-->
         <scene sceneID="WUo-e6-S6V">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gre-gl-mYa" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Gre-gl-mYa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n3F-LB-InT">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

@@ -9,7 +9,9 @@
 import UIKit
 import Parse
 
-class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+
+class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     
     
@@ -18,20 +20,31 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     var propObj = PFObject(className: "allListings")
     var myArray:[PFObject] = []
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
-   
-//    func startActivityIndicator() {
-//
-////        activityIndicator.center = self.view.center
-//        activityIndicator.hidesWhenStopped = true
-//        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-////        view.addSubview(activityIndicator)
-//        activityIndicator.startAnimating()
-//    }
+    var imageView = UIImageView()
+    var parallexFactor: CGFloat = 2.0
+    var imageHeight: CGFloat = 300.0 {
+        didSet {
+            moveImage()
+        }
+    }
+    var scrollOffset: CGFloat = 0 {
+        didSet {
+            moveImage()
+        }
+    }
+
+    
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
     }
    
+   
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     
+
     func queryForTable() {
         let query = PFQuery(className: "allListings")
         query.order(byDescending: "price")
@@ -51,20 +64,44 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imageView.image = UIImage(named: "avenue-logo-three")
+        self.listingTableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
+        self.imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        self.listingTableView.addSubview(imageView)
+        self.listingTableView.sendSubview(toBack:imageView)
+        listingTableView.tableFooterView = UIView(frame: CGRect.zero)
+
         
         listingTableView.delegate = self
         listingTableView.dataSource = self
         listingTableView.rowHeight = UITableViewAutomaticDimension
-        listingTableView.rowHeight = 300
-        listingTableView.backgroundColor = #colorLiteral(red: 0.3647058824, green: 0.3647058824, blue: 0.3647058824, alpha: 1)
+        listingTableView.rowHeight = 250
+        listingTableView.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.7607843137, blue: 0.8196078431, alpha: 1)
 
         listingTableView.separatorColor = UIColor.clear
-
+        
+        
         queryForTable()
         
         
     }
-
+    //step 8: Define method for image location changes
+    func moveImage() {
+        let imageOffset = (scrollOffset > 0) ? scrollOffset / parallexFactor : 0
+        let imageHeight = (scrollOffset > 0) ? self.imageHeight : self.imageHeight - scrollOffset
+        self.imageView.frame = CGRect(x: 0, y: -imageHeight + imageOffset, width: view.bounds.size.width, height: imageHeight)
+    }
+    
+    //Step 9 : update image position after layout changes
+    override func viewDidLayoutSubviews() {
+        moveImage()
+    }
+    
+    //step 10: update scrolloffset on tableview scroll
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollOffset = listingTableView.contentOffset.y + imageHeight
+    }
   
 
     // MARK: - Table view data source
@@ -135,8 +172,14 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         
     }
-
- 
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super .viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
     // MARK: - Navigation
 

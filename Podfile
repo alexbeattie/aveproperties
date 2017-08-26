@@ -7,7 +7,7 @@ target 'ave6' do
 
   pod 'Parse', '~> 1.15'
   pod 'Alamofire', '~> 4.5'
-  
+  pod 'GSKStretchyHeaderView'
 
   # Pods for ave6
 
