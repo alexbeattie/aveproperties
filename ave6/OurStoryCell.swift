@@ -10,8 +10,8 @@ import UIKit
 
 class OurStoryCell: UITableViewCell {
 
-    @IBOutlet weak var aboutTxtLbl: UILabel!
-    @IBOutlet weak var aboutDetailLbl: UILabel!
+//    @IBOutlet var aboutTxtLbl: UILabel!
+    @IBOutlet var aboutDetailLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

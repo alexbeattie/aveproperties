@@ -10,13 +10,11 @@ import UIKit
 import Parse
 
 class OurStoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var propObj = PFObject(className: "ourStory")
 
-    var myArray: [PFObject] = []
-    
+
     @IBOutlet weak var ourStoryTableView: UITableView!
-    
-    
+    var propObj = PFObject(className: "ourStory")
+    var myArray:[PFObject] = []
     
     func queryForTable() {
         let query = PFQuery(className: "ourStory")
@@ -37,8 +35,10 @@ class OurStoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        
+        ourStoryTableView.estimatedRowHeight = 85.0
         ourStoryTableView.rowHeight = UITableViewAutomaticDimension
-        ourStoryTableView.rowHeight = 250
+        
         ourStoryTableView.delegate = self
         ourStoryTableView.dataSource = self
         queryForTable()
@@ -54,20 +54,21 @@ class OurStoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "OurStory", for: indexPath) as? OurStoryCell else { return UITableViewCell() }
 
    
-        
-        var ourStoryClass = PFObject(className: "ourStory")
-        ourStoryClass = myArray[indexPath.row]
-        
-        if let theName = ourStoryClass["aboutText"] as? String {
-            cell.aboutTxtLbl.text = theName
-        }
-        
-        if let thePrice = ourStoryClass["aboutDetailTxt"] as? String {
-            cell.aboutDetailLbl.text = thePrice
+        DispatchQueue.main.async {
+            var ourStoryClass = PFObject(className: "ourStory")
+            ourStoryClass = self.myArray[indexPath.row]
+            
+//            if let theName = ourStoryClass["aboutText"] as? String {
+//                cell.aboutTxtLbl.text = theName
+//            }
+            cell.aboutDetailLbl.text = ourStoryClass["about"] as? String
+            
+//
+//            if let thePrice =  {
+//            }
         }
      
+        
         return cell
     }
 }
-
-
