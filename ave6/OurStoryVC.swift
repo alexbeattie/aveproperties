@@ -9,66 +9,79 @@
 import UIKit
 import Parse
 
-class OurStoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class OurStoryVC: UIViewController, UIScrollViewDelegate {
 
-
-    @IBOutlet weak var ourStoryTableView: UITableView!
     var propObj = PFObject(className: "ourStory")
     var myArray:[PFObject] = []
+
+    @IBOutlet weak var containerScrollView: UIScrollView!
+    @IBOutlet weak var descriptionTxt: UITextView!
+    @IBOutlet weak var image:UIImageView!
+
+    @IBOutlet weak var theNameLbl: UILabel!
     
-    func queryForTable() {
-        let query = PFQuery(className: "ourStory")
-        //        query.cachePolicy = .networkElseCache
-        query.findObjectsInBackground { (objects, error) -> Void in
-            if error == nil {
-                if let objects = objects {
-                    for object in objects  {
-                        self.myArray.append(object)
-                        
-                        print(objects)
-                    }
-                    self.ourStoryTableView.reloadData()
-                }
-            }
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        getDetails()
         
-        ourStoryTableView.estimatedRowHeight = 85.0
-        ourStoryTableView.rowHeight = UITableViewAutomaticDimension
         
-        ourStoryTableView.delegate = self
-        ourStoryTableView.dataSource = self
-        queryForTable()
-
     }
 
-
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myArray.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "OurStory", for: indexPath) as? OurStoryCell else { return UITableViewCell() }
-
-   
-        DispatchQueue.main.async {
-            var ourStoryClass = PFObject(className: "ourStory")
-            ourStoryClass = self.myArray[indexPath.row]
-            
-//            if let theName = ourStoryClass["aboutText"] as? String {
-//                cell.aboutTxtLbl.text = theName
+    func getDetails() {
+//        if let theName = propObj["about"] as? String {
+//            self.descriptionTxt.text = theName
+//            print(theName)
+//        }
+//        let query = PFQuery(className: "ourStory")
+//        query.findObjectsInBackground { (objects, error) -> Void in
+//            if error == nil {
+//                if let objects = objects {
+//                    for object in objects  {
+//                        self.myArray.append(object)
+//                        print(objects)
+//                    }
+//                    //                    self.ourStoryTableView.reloadData()
+//                }
 //            }
-            cell.aboutDetailLbl.text = ourStoryClass["about"] as? String
-            
-//
-//            if let thePrice =  {
-//            }
+//        }
+        
+        
+        let query = PFQuery(className: "ourStory")
+        query.getFirstObjectInBackground { (objects, error) -> Void in
+            if error == nil {
+                if let objects = objects {
+                        print(objects)
+                    }
+                    //                    self.ourStoryTableView.reloadData()
+               
+            }
         }
-     
         
-        return cell
+        
+        
+        
+        
+        if propObj["theTitle"] != nil { theNameLbl.text = "\(propObj["theTitle"]!)"
+        } else { theNameLbl.text = "N/A" }
+        if propObj["about"] != nil { theNameLbl.text = "\(propObj["about"]!)"
+        } else { descriptionTxt.text = "N/A" }
+        
+//        descriptionTxt.text = propObj["about"] as? String
+//        theNameLbl.text = propObj["theTitle"] as? String
+        DispatchQueue.main.async(execute: { () -> Void in
+            
+            let imageFile = self.propObj[PROP_IMAGE] as? PFFile
+            imageFile?.getDataInBackground { (imageData, error) -> Void in
+                if error == nil {
+                    if let imageData = imageData {
+                        self.image.image = UIImage(data: imageData)
+                    }
+                    //cell.activityIndicator.stopAnimating()
+                }
+            }
+        })
+
     }
+   
+
 }
