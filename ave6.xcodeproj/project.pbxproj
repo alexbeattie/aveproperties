@@ -26,6 +26,8 @@
 		8E7F847C1F3CBFB800057563 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7F847B1F3CBFB800057563 /* GradientView.swift */; };
 		8E7F847F1F3CDCC700057563 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7F847E1F3CDCC700057563 /* DescriptionCell.swift */; };
 		8EBDD5F81F522F360096DB3B /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDD5F71F522F360096DB3B /* WebView.swift */; };
+		8EBDD5FA1F525D390096DB3B /* OurStoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDD5F91F525D390096DB3B /* OurStoryVC.swift */; };
+		8EBDD5FC1F525EBC0096DB3B /* OurStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDD5FB1F525EBC0096DB3B /* OurStoryCell.swift */; };
 		8EC880991F422EDF0006938C /* MovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC880981F422EDF0006938C /* MovieController.swift */; };
 		8EEC3F741F51CB4F004327E7 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC3F731F51CB4F004327E7 /* Utility.swift */; };
 		8EF732951F1ACB89004CF9B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF732941F1ACB89004CF9B2 /* AppDelegate.swift */; };
@@ -59,6 +61,8 @@
 		8E7F847B1F3CBFB800057563 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		8E7F847E1F3CDCC700057563 /* DescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		8EBDD5F71F522F360096DB3B /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		8EBDD5F91F525D390096DB3B /* OurStoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurStoryVC.swift; sourceTree = "<group>"; };
+		8EBDD5FB1F525EBC0096DB3B /* OurStoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurStoryCell.swift; sourceTree = "<group>"; };
 		8EC880981F422EDF0006938C /* MovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieController.swift; sourceTree = "<group>"; };
 		8EEC3F731F51CB4F004327E7 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		8EF732911F1ACB89004CF9B2 /* ave6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ave6.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +217,8 @@
 				8EF7329D1F1ACB89004CF9B2 /* LaunchScreen.storyboard */,
 				8EF732A01F1ACB89004CF9B2 /* Info.plist */,
 				8EBDD5F71F522F360096DB3B /* WebView.swift */,
+				8EBDD5F91F525D390096DB3B /* OurStoryVC.swift */,
+				8EBDD5FB1F525EBC0096DB3B /* OurStoryCell.swift */,
 			);
 			path = ave6;
 			sourceTree = "<group>";
@@ -370,6 +376,7 @@
 				8EC880991F422EDF0006938C /* MovieController.swift in Sources */,
 				8E287E361F50E4B6000ABC7F /* ListingsTVC.swift in Sources */,
 				8E3A8E911F254C0300AA28CD /* Annotations.swift in Sources */,
+				8EBDD5FA1F525D390096DB3B /* OurStoryVC.swift in Sources */,
 				8EEC3F741F51CB4F004327E7 /* Utility.swift in Sources */,
 				8E287E381F50E4CF000ABC7F /* ListingsCell.swift in Sources */,
 				8E23CF5D1F4CCBFC00B0309E /* AboutCell.swift in Sources */,
@@ -380,6 +387,7 @@
 				8E7F847C1F3CBFB800057563 /* GradientView.swift in Sources */,
 				8E23CF5B1F4CC00D00B0309E /* AboutNew.swift in Sources */,
 				8E7532001F4BBF3800F309C0 /* AboutVC.swift in Sources */,
+				8EBDD5FC1F525EBC0096DB3B /* OurStoryCell.swift in Sources */,
 				8E60ACBE1F40C15E0024B2CA /* NewAnnotations.swift in Sources */,
 				8E5ECD371F252AA4003F0A8A /* NewDetailViewController.swift in Sources */,
 				8E006C3C1F1AD56200BDDAA4 /* CollectionViewCell.swift in Sources */,
@@ -449,7 +457,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -494,7 +502,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
