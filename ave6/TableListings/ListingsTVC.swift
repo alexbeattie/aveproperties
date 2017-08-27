@@ -175,6 +175,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.setToolbarHidden(true, animated: false)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super .viewWillDisappear(animated)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomTabController: UITabBarController {
+class CustomTabController: UITabBarController, UITabBarControllerDelegate {
 
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,7 +24,15 @@ class CustomTabController: UITabBarController {
         
     
     }
-
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print("Selected item")
+        
+    }
+    // UITabBarControllerDelegate
+    private func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        print("Selected view controller")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

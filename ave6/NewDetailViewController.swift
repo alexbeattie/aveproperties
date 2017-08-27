@@ -142,6 +142,7 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         
     }
   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -150,7 +151,10 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         expandCollapse.setImage(tintedImage, for: .normal)
         expandCollapse.tintColor = #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1)
         
-        
+      
+
+    
+
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -193,7 +197,14 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         stopActivityIndicator()
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        self.navigationController?.toolbar.isTranslucent = true
+
+     
         
+//        calcBtn.addTarget(self, action: #selector(MainVC.calculate), for: .touchUpInside)
+
+
     }
     
   
@@ -342,6 +353,11 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         super.viewWillDisappear(animated)
         startActivityIndicator()
     }
+    
+ 
+    
+    
+    
     // Goto weblink
     @IBOutlet weak var goToLinkNow: UIButton!
     @IBOutlet weak var webLinkBtn: UIBarButtonItem!
