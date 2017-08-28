@@ -78,14 +78,7 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
     }
     
     
-    
-    
-//    @IBAction func animateDwon(_ sender: Any) {
-//        expandMapView.constant = 0
-//        UIView.animate(withDuration: 0.3) {
-//            self.view.layoutIfNeeded()
-//        }
-//    }
+
     
     @IBAction func playBtn(_ sender: Any) {
 
@@ -195,10 +188,11 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         self.title = propObj["name"] as? String
         
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.navigationController?.toolbar.tintColor = #colorLiteral(red: 0.4352941215, green: 0.4431372583, blue: 0.4745098054, alpha: 1)
         stopActivityIndicator()
         self.navigationController?.setToolbarHidden(false, animated: true)
-        self.navigationController?.toolbar.isTranslucent = true
+//        self.navigationController?.toolbar.isTranslucent = true
+        
 
      
         

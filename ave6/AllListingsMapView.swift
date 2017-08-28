@@ -17,6 +17,7 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     var annotation:MKAnnotation!
     var pointAnnotation: MKPointAnnotation!
     var pinView:MKPinAnnotationView!
+    var officePinView:MKPinAnnotationView!
     var listingClass = PFObject(className: "allListings")
     var addressItems = PFGeoPoint()
     var coords: CLLocationCoordinate2D?
@@ -39,7 +40,6 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-                navigationItem.title? = "ALL LISTINGS MAP"
         
         
         
@@ -49,12 +49,37 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
         super.viewWillDisappear(animated)
        
     }
+    
+    func dropFavoriteAnnotation() {
+//        let office = CLLocationCoordinate2D(latitude: 47.613236, longitude: -122.196953)
+//        self.mapView?.addAnnotation(office as! MKAnnotation)
+ 
+        let coordinate = CLLocationCoordinate2DMake(47.613236, -122.196953)
+
+        
+        let officeAnno = MKPointAnnotation()
+        officeAnno.coordinate = coordinate
+        officeAnno.title = "Avenue Properties"
+        officeAnno.subtitle = "Bellevue, Washington"
+        
+        self.mapView.addAnnotation(officeAnno)
+
+        
+        
+    }
+
+   
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         
 
+        navigationItem.title = "ALL LISTINGS MAP"
 
+        
+        
+        
         mapView.showsUserLocation = true
         let initialLocation = CLLocationCoordinate2D(latitude: 48.331965, longitude: -122.323164)
         let span = MKCoordinateSpan(latitudeDelta: 1.75, longitudeDelta: 1.75)
@@ -67,11 +92,8 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
             
         }
     
-
+        dropFavoriteAnnotation()
         addAnnotations()
-        
-
-
         
 
     }
@@ -114,17 +136,19 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
  
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{
-            return nil;
+            return nil
         }else{
-            let pinIdent = "Pin";
-            var pinView: MKPinAnnotationView;
+            let pinIdent = "Pin"
+            var pinView: MKPinAnnotationView
             if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView {
-                dequeuedView.annotation = annotation;
-                pinView = dequeuedView;
+                dequeuedView.annotation = annotation
+                pinView = dequeuedView
+                pinView.canShowCallout = true 
+
             }else{
                 pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent);
 //                let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
-                let swiftColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+                let swiftColor = #colorLiteral(red: 0.4352941215, green: 0.4431372583, blue: 0.4745098054, alpha: 1)
                 
                 pinView.pinTintColor = swiftColor
                 pinView.animatesDrop = true
@@ -136,6 +160,8 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
                 rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
                 rightButton.clipsToBounds = true
                 pinView.rightCalloutAccessoryView = rightButton
+                
+     
                 
             }
       
@@ -163,7 +189,6 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
 
 //            mapItem.name = propObj["name"] as? String
             mapItem.name = view.annotation!.title!
-            print(mapItem.name)
             let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
             
             

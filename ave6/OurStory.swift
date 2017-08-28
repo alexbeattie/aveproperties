@@ -16,6 +16,7 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var propObj = PFObject(className: "ourStory")
     var bioStuff:[PFObject] = []
     var imageView = UIImageView()
+    var imageView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
     var parallexFactor: CGFloat = 2.0
     var imageHeight: CGFloat = 200.0 {
         didSet {
@@ -53,11 +54,13 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         super.viewDidLoad()
         startActivityIndicator()
-        navigationItem.title? = "OUR STORY"
-//        self.title = "Our Story"
         
-        
-        
+//        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        imageView2.contentMode = .scaleAspectFit
+        let image = UIImage(named: "avenuelogotype")
+        imageView2.image = image
+        navigationItem.titleView = imageView2
+
 
         self.imageView.image = UIImage(named: "seattle-one")
         self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)

@@ -51,7 +51,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return true
     }
 
-   
+
 
     func queryForTable() {
         let query = PFQuery(className: "allListings")
@@ -65,13 +65,19 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                         
                         //                        print(objects)
                     }
-                    self.listingTableView.reloadData()
+                    
+                        self.listingTableView.reloadData()
+                    
+                    
+
+//                    self.listingTableView.reloadData()
                 }
             }
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.imageView.image = UIImage(named: "avenue-logo-three")
         self.listingTableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
         self.imageView.contentMode = .scaleAspectFill
@@ -130,9 +136,12 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listingCell", for: indexPath) as? ListingsCell else { return UITableViewCell() }
         stopActivityIndicator()
         cell.listingImage.image = nil
-        cell.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.7607843137, blue: 0.8196078431, alpha: 1)
+//        cell.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.7607843137, blue: 0.8196078431, alpha: 1)
+        cell.backgroundColor = UIColor.gray
         cell.layer.borderWidth = 2.0
         cell.layer.borderColor = #colorLiteral(red: 0.5137254902, green: 0.8470588235, blue: 0.8117647059, alpha: 1)
+        cell.alpha = 0
+        UIView.animate(withDuration: 0.5, animations: { cell.alpha = 1 })
 
         var listingClass = PFObject(className: "allListings")
         listingClass = myArray[indexPath.row]
@@ -182,7 +191,9 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         var listingClass = PFObject(className: "allListings")
         listingClass = myArray[indexPath.row]
-
+        let barBtn = UIBarButtonItem()
+        barBtn.title = ""
+        navigationItem.backBarButtonItem = barBtn
         let pdVC =  storyboard!.instantiateViewController(withIdentifier: "PropertyDetails") as! NewDetailViewController
         pdVC.propObj = listingClass
         navigationController?.pushViewController(pdVC, animated: true)

@@ -23,7 +23,10 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var parallexFactor: CGFloat = 2.0
     var imageHeight: CGFloat = 600.0 {
         didSet {
+            UIView.animate(withDuration: 1, animations: { self.imageView2.alpha = 1 })
+
             moveImage()
+
         }
     }
     var scrollOffset: CGFloat = 0 {
@@ -47,7 +50,11 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +62,10 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
         imageView2.contentMode = .scaleAspectFill
         imageView2.clipsToBounds = true
+
+
         tableView.addSubview(imageView2)
+
         tableView.sendSubview(toBack:imageView2)
         tableView.tableFooterView = UIView(frame: CGRect.zero)
 
@@ -66,12 +76,14 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 //        tableView.estimatedRowHeight = 140
 //
         
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         imageView.contentMode = .scaleAspectFit
-        let image = UIImage(named: "avenuelogotype")
+
+        let image = UIImage(named: "team-foster-logo")
         imageView.image = image
+
         navigationItem.titleView = imageView
-        
+
         startActivityIndicator()
         queryForTable()
         tableView.reloadData()
@@ -128,7 +140,7 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
        
         cell.bioDescLbl?.text = propObj["bio"] as? String
         if let eachName = propObj["name"] as? String {
-            cell.theName?.text = eachName
+            cell.theName?.text = eachName.uppercased()
             
         }
 
