@@ -217,8 +217,8 @@ class NewDetailViewController: UIViewController, MKMapViewDelegate, UITableViewD
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as? DescriptionCell else { return UITableViewCell() }
         
-        if let theName = propObj["name"] {
-            cell.propName.text = theName as? String
+        if let theName = propObj["name"] as? String {
+            cell.propName.text = theName.uppercased()
         }
         
         if let theCost = propObj["cost"] as? String {

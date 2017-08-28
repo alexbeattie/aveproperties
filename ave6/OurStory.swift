@@ -53,8 +53,8 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         super.viewDidLoad()
         startActivityIndicator()
-//        navigationItem.title?.capitalized
-        self.title = "Our Story"
+        navigationItem.title? = "OUR STORY"
+//        self.title = "Our Story"
         
         
         

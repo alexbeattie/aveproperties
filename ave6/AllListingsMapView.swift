@@ -38,7 +38,10 @@ class AllListingsMapView: UIViewController, MKMapViewDelegate, CLLocationManager
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "All Listings Map"
+        
+                navigationItem.title? = "ALL LISTINGS MAP"
+        
+        
         
     }
     override func viewWillDisappear(_ animated: Bool)
