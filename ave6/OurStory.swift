@@ -12,14 +12,56 @@ import Parse
 class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate{
 
     @IBOutlet weak var tableView:UITableView!
-//    var headerView: UIView!
-    
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+
     var propObj = PFObject(className: "ourStory")
     var bioStuff:[PFObject] = []
+    var imageView = UIImageView()
+    var parallexFactor: CGFloat = 2.0
+    var imageHeight: CGFloat = 200.0 {
+        didSet {
+            moveImage()
+        }
+    }
+    var scrollOffset: CGFloat = 0 {
+        didSet {
+            moveImage()
+        }
+    }
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    func startActivityIndicator() {
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        startActivityIndicator()
+    }
+    
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
+        self.imageView.image = UIImage(named: "seattle-one")
+        self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
+        self.imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        self.tableView.addSubview(imageView)
+        self.tableView.sendSubview(toBack:imageView)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -64,7 +106,22 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     //        }
     //    }
     
+    //step 8: Define method for image location changes
+    func moveImage() {
+        let imageOffset = (scrollOffset > 0) ? scrollOffset / parallexFactor : 0
+        let imageHeight = (scrollOffset > 0) ? self.imageHeight : self.imageHeight - scrollOffset
+        self.imageView.frame = CGRect(x: 0, y: -imageHeight + imageOffset, width: view.bounds.size.width, height: imageHeight)
+    }
     
+    //Step 9 : update image position after layout changes
+    override func viewDidLayoutSubviews() {
+        moveImage()
+    }
+    
+    //step 10: update scrolloffset on tableview scroll
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollOffset = tableView.contentOffset.y + imageHeight
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bioStuff.count
@@ -83,7 +140,8 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             cell.theName?.text = eachName
             
         }
-        
+        stopActivityIndicator()
+        activityIndicator.removeFromSuperview()
         return cell
     }
     

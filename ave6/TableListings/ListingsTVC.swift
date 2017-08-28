@@ -22,7 +22,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     var imageView = UIImageView()
     var parallexFactor: CGFloat = 2.0
-    var imageHeight: CGFloat = 300.0 {
+    var imageHeight: CGFloat = 200.0 {
         didSet {
             moveImage()
         }
