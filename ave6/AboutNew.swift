@@ -14,23 +14,51 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     
     @IBOutlet weak var tableView:UITableView!
-    private let kTableHeaderHeight: CGFloat = 600.0
-    var headerView: UIView!
+
     
     var propObj = PFObject(className: "Bio")
     var bioStuff:[PFObject] = []
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var imageView2 = UIImageView()
+    var parallexFactor: CGFloat = 2.0
+    var imageHeight: CGFloat = 600.0 {
+        didSet {
+            moveImage()
+        }
+    }
+    var scrollOffset: CGFloat = 0 {
+        didSet {
+            moveImage()
+        }
+    }
+    
+    func startActivityIndicator() {
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     override func viewDidLoad() {
-        
-      
         super.viewDidLoad()
-        
-        headerView = tableView.tableHeaderView
-        tableView.tableHeaderView = nil
-        tableView.addSubview(headerView)
-        
-        tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
-        tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
-        updateHeaderView()
+        self.imageView2.image = UIImage(named: "T-and-M-Goldfinch-Tavern")
+        self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
+        imageView2.contentMode = .scaleAspectFill
+        imageView2.clipsToBounds = true
+        tableView.addSubview(imageView2)
+        tableView.sendSubview(toBack:imageView2)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -44,25 +72,15 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         imageView.image = image
         navigationItem.titleView = imageView
         
+        startActivityIndicator()
         queryForTable()
         tableView.reloadData()
-        
+        activityIndicator.isHidden = true
+        activityIndicator.removeFromSuperview()
+
     }
 
-    func updateHeaderView() {
-        
-        var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
-        if tableView.contentOffset.y < -kTableHeaderHeight {
-            headerRect.origin.y = tableView.contentOffset.y
-            headerRect.size.height = -tableView.contentOffset.y
-        }
-        headerView.frame = headerRect
-        
-    }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        updateHeaderView()
-    }
     func queryForTable() {
     let query = PFQuery(className: "Bio")
         query.findObjectsInBackground { (objects, error) -> Void in
@@ -78,22 +96,23 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
     }
     
+    //step 8: Define method for image location changes
+    func moveImage() {
+        let imageOffset = (scrollOffset > 0) ? scrollOffset / parallexFactor : 0
+        let imageHeight = (scrollOffset > 0) ? self.imageHeight : self.imageHeight - scrollOffset
+        self.imageView2.frame = CGRect(x: 0, y: -imageHeight + imageOffset, width: view.bounds.size.width, height: imageHeight)
+    }
     
-//    get image
-//    let leftIconView = UIImageView()
-//    leftIconView.contentMode = .scaleAspectFill
-//    
-//    if let thumbImage = self.propObj["imageFile"] as? PFFile {
-//        thumbImage.getDataInBackground() { (imageData, error) -> Void in
-//            if error == nil {
-//                if let imageData = imageData {
-//                    leftIconView.image = UIImage(data:imageData)
-//                }
-//            }
-//        }
-//    }
-
-  
+    //Step 9 : update image position after layout changes
+    override func viewDidLayoutSubviews() {
+        moveImage()
+    }
+    
+    //step 10: update scrolloffset on tableview scroll
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollOffset = tableView.contentOffset.y + imageHeight
+    }
+    
 
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bioStuff.count

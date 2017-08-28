@@ -89,10 +89,12 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         listingTableView.separatorColor = UIColor.clear
         
-        
+        startActivityIndicator()
         queryForTable()
         
-        
+        stopActivityIndicator()
+        activityIndicator.isHidden = true
+        activityIndicator.removeFromSuperview()
     }
     //step 8: Define method for image location changes
     func moveImage() {
@@ -120,7 +122,10 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return myArray.count
     }
 
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        activityIndicator.removeFromSuperview()
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "listingCell", for: indexPath) as? ListingsCell else { return UITableViewCell() }
         stopActivityIndicator()
@@ -140,7 +145,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.priceLbl.text = thePrice
         }
 
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
 //        activityIndicator.removeFromSuperview()
         
 //        DispatchQueue.main.async(execute: { () -> Void in
@@ -152,10 +157,10 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                     if let imageData = imageData {
 //                        self.activityIndicator.stopAnimating()
 //                        self.activityIndicator.removeFromSuperview()
-                        self.activityIndicator.startAnimating()
+//                        self.activityIndicator.startAnimating()
 
                         cell.listingImage.image = UIImage(data: imageData)
-                        self.activityIndicator.removeFromSuperview()
+//                        self.activityIndicator.removeFromSuperview()
 
                     }
                     

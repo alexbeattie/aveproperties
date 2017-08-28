@@ -13,7 +13,6 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
     @IBOutlet weak var tableView:UITableView!
     var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
-
     var propObj = PFObject(className: "ourStory")
     var bioStuff:[PFObject] = []
     var imageView = UIImageView()
@@ -33,7 +32,7 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     }
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     func startActivityIndicator() {
         
@@ -48,11 +47,17 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         super .viewWillAppear(animated)
     }
     
+   
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
         startActivityIndicator()
+//        navigationItem.title?.capitalized
+        self.title = "Our Story"
+        
+        
+        
 
         self.imageView.image = UIImage(named: "seattle-one")
         self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)

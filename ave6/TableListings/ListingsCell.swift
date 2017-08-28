@@ -23,7 +23,7 @@ class ListingsCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
 //        Utility.sharedInstance.startActivityIndicator()
-        startActivityIndicator()
+//        startActivityIndicator()
 
     }
 
