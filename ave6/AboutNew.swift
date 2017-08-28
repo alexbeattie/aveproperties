@@ -37,6 +37,13 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         tableView.rowHeight = UITableViewAutomaticDimension
 //        tableView.estimatedRowHeight = 140
 //
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        imageView.contentMode = .scaleAspectFit
+        let image = UIImage(named: "avenuelogotype")
+        imageView.image = image
+        navigationItem.titleView = imageView
+        
         queryForTable()
         tableView.reloadData()
         

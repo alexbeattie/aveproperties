@@ -46,13 +46,14 @@ class OurStory: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
-        startActivityIndicator()
     }
     
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
+        startActivityIndicator()
+
         self.imageView.image = UIImage(named: "seattle-one")
         self.tableView.contentInset = UIEdgeInsets(top: imageHeight, left: 0, bottom: 0, right: 0)
         self.imageView.contentMode = .scaleAspectFill

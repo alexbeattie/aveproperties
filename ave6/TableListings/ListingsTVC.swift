@@ -33,7 +33,15 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
     }
 
-    
+    func startActivityIndicator() {
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
     }
@@ -43,7 +51,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return true
     }
 
-    
+   
 
     func queryForTable() {
         let query = PFQuery(className: "allListings")
@@ -133,19 +141,23 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
 
         activityIndicator.startAnimating()
-
+//        activityIndicator.removeFromSuperview()
         
 //        DispatchQueue.main.async(execute: { () -> Void in
 
             let imageFile = listingClass[PROP_IMAGE] as? PFFile
+
         imageFile?.getDataInBackground { (imageData, error) -> Void in
                 if error == nil {
                     if let imageData = imageData {
 //                        self.activityIndicator.stopAnimating()
 //                        self.activityIndicator.removeFromSuperview()
-                        cell.listingImage.image = UIImage(data: imageData)
-                    }
+                        self.activityIndicator.startAnimating()
 
+                        cell.listingImage.image = UIImage(data: imageData)
+                        self.activityIndicator.removeFromSuperview()
+
+                    }
                     
                 }
             }
@@ -176,6 +188,8 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         super .viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.setToolbarHidden(true, animated: false)
+        startActivityIndicator()
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         super .viewWillDisappear(animated)
