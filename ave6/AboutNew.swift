@@ -48,6 +48,7 @@ class AboutNew: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         activityIndicator.stopAnimating()
     }
     
+   
     
     override var prefersStatusBarHidden: Bool {
         return false

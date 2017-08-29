@@ -23,6 +23,8 @@ class CollectionViewController: UICollectionViewController, UITabBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         print("Im in View Will Appear")
         super.viewWillAppear(animated)
+        self.navigationController?.setToolbarHidden(true, animated: true)
+
 
     }
 
@@ -40,6 +42,7 @@ class CollectionViewController: UICollectionViewController, UITabBarDelegate {
         let image = UIImage(named: "avenuelogotype")
         imageView.image = image
         navigationItem.titleView = imageView
+        self.navigationController?.setToolbarHidden(true, animated: true)
 
         queryAllListings()
     }

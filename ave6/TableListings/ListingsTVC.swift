@@ -56,7 +56,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func queryForTable() {
         let query = PFQuery(className: "allListings")
         query.order(byDescending: "price")
-//        query.cachePolicy = .networkElseCache
+        query.cachePolicy = .networkElseCache
         query.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
                 if let objects = objects {
@@ -185,7 +185,11 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         return cell
     }
- 
+    @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
+        
+        listingTableView.reloadData()
+    }
+
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -200,6 +204,7 @@ class ListingsTVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = true
